@@ -7,6 +7,8 @@ environment:
   sdk: ">=2.17.0 <3.0.0"
 
 dependencies:
+  books_data_source:
+    path: packages/books_data_source
   dart_frog: ^0.1.0
 
 dev_dependencies:
