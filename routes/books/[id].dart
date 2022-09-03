@@ -5,8 +5,20 @@ import 'package:books_data_source/books_data_source.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 FutureOr<Response> onRequest(RequestContext context, String id) async {
+  final dataSource = context.read<BooksDataSource>();
+  Book? book;
+  try {
+    book = await dataSource.read(int.parse(id));
+
+    if (book == null) {
+      return Response(statusCode: HttpStatus.notFound, body: 'Not found');
+    }
+  } catch (_) {
+    return Response(statusCode: HttpStatus.notFound, body: 'Not found');
+  }
+
   if (context.request.method == HttpMethod.get) {
-    return _getMethod(context, int.parse(id));
+    return _getMethod(context, book);
   } else if (context.request.method == HttpMethod.put) {
     return _putMethod(context, int.parse(id));
   } else if (context.request.method == HttpMethod.delete) {
@@ -16,10 +28,7 @@ FutureOr<Response> onRequest(RequestContext context, String id) async {
   }
 }
 
-FutureOr<Response> _getMethod(RequestContext context, int id) async {
-  final dataSource = context.read<BooksDataSource>();
-  final book = await dataSource.read(id);
-
+FutureOr<Response> _getMethod(RequestContext context, Book book) async {
   return Response.json(body: book);
 }
 
