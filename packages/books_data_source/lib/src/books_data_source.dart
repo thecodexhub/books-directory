@@ -6,7 +6,7 @@ class BooksDataSource {
   final _data = <Book>[];
 
   /// Initialises the Function once so that it preserves access to
-  /// the variables of the outer function of `_autoIncrementId()`, 
+  /// the variables of the outer function of `_autoIncrementId()`,
   /// even after the outer function has finished executing.
   final generateId = _autoIncrementId();
 
@@ -24,8 +24,13 @@ class BooksDataSource {
   Future<List<Book>> readAll() async => _data;
 
   /// Returns a [Book] with the specified `id` if exists.
-  Future<Book?> read(int id) async =>
-      _data.firstWhere((element) => element.id == id);
+  Future<Book?> read(int id) async {
+    try {
+      return _data.firstWhere((element) => element.id == id);
+    } catch (_) {
+      return null;
+    }
+  }
 
   /// Updates the [Book] with the provided `id` and returns the updated [Book].
   Future<Book> update(int id, Book book) async {
