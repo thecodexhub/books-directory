@@ -5,9 +5,13 @@ class BooksDataSource {
   /// List of all the books
   final _data = <Book>[];
 
+  /// Initialises the Function once so that it preserves access to
+  /// the variables of the outer function of `_autoIncrementId()`, 
+  /// even after the outer function has finished executing.
+  final generateId = _autoIncrementId();
+
   /// Creates and returns the newly created [Book].
   Future<Book> createBook(Book book) async {
-    final generateId = _autoIncrementId();
     final id = generateId();
 
     final createdBook = book.copyWith(id: id);
@@ -41,17 +45,17 @@ class BooksDataSource {
     final bookToBeDeleted = _data.firstWhere((element) => element.id == id);
     return _data.remove(bookToBeDeleted);
   }
+}
 
-  /// A Closure function that easily generates auto incremented id.
-  ///
-  /// ```dart
-  /// final generateId = _autoIncrementId();
-  /// final id1 = generateId(); // 0
-  /// final id2 = generateId(); // 1
-  /// ```
-  int Function() _autoIncrementId() {
-    var _count = 0;
-    int increment() => _count++;
-    return increment;
-  }
+/// A Closure function that easily generates auto incremented id.
+///
+/// ```dart
+/// final generateId = _autoIncrementId();
+/// final id1 = generateId(); // 0
+/// final id2 = generateId(); // 1
+/// ```
+int Function() _autoIncrementId() {
+  var _count = 0;
+  int increment() => _count++;
+  return increment;
 }
