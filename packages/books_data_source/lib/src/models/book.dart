@@ -19,16 +19,16 @@ part 'book.g.dart';
 @JsonSerializable()
 class Book extends Equatable {
   /// {@macro book}
-  Book({
+  const Book({
     this.id,
     required this.name,
     this.description = '',
     required this.author,
-  }) : assert(id == null || !id.isNaN, 'id cannot be null');
+  }) : assert(id == null || id >= 0, 'id cannot be negative');
 
   /// The unique identifier of the [Book].
   ///
-  /// Cannot be null.
+  /// Cannot be lesser than 0.
   final int? id;
 
   /// The name of the [Book].
