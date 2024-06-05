@@ -22,7 +22,9 @@ FutureOr<Response> _getMethod(RequestContext context) async {
 
 FutureOr<Response> _postMethod(RequestContext context) async {
   final dataSource = context.read<BooksDataSource>();
-  final book = Book.fromJson(await context.request.json());
+  final book = Book.fromJson(
+    await context.request.json() as Map<String, dynamic>,
+  );
 
   return Response.json(
     statusCode: HttpStatus.created,

@@ -9,9 +9,9 @@ environment:
 dependencies:
   books_data_source:
     path: packages/books_data_source
-  dart_frog: ^0.1.0
+  dart_frog: ^1.1.0
 
 dev_dependencies:
-  mocktail: ^0.3.0
+  mocktail: ^1.0.3
   test: ^1.19.2
-  very_good_analysis: ^3.0.1
+  very_good_analysis: ^5.1.0

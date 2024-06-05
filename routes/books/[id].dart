@@ -34,7 +34,9 @@ FutureOr<Response> _getMethod(RequestContext context, Book book) async {
 
 FutureOr<Response> _putMethod(RequestContext context, int id) async {
   final dataSource = context.read<BooksDataSource>();
-  final book = Book.fromJson(await context.request.json());
+  final book = Book.fromJson(
+    await context.request.json() as Map<String, dynamic>,
+  );
 
   final updatedBook = await dataSource.update(id, book);
   return Response.json(body: updatedBook);
