@@ -1,0 +1,28 @@
+### Create a new book
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "name": "Psychology of Money",
+  "description": "Timeless lessons on wealth, greed, and happiness doing well with money",
+  "author": "Morgan Housel"
+}
+
+### Get the list of books
+GET http://localhost:8080/books
+
+### Get a book by id
+GET http://localhost:8080/books/0
+
+### Update a book by id
+PUT http://localhost:8080/books/0
+Content-Type: application/json
+
+{
+  "name": "Psychology of Money - Edition 2020",
+  "description": "Timeless lessons on wealth, greed, and happiness doing well with money",
+  "author": "Morgan Housel"
+}
+
+### Delete a book by id
+DELETE http://localhost:8080/books/0

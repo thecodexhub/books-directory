@@ -11,20 +11,30 @@ FutureOr<Response> onRequest(RequestContext context, String id) async {
     book = await dataSource.read(int.parse(id));
 
     if (book == null) {
-      return Response(statusCode: HttpStatus.notFound, body: 'Not found');
+      return Response(
+        statusCode: HttpStatus.notFound,
+        body: 'Not found',
+      );
     }
   } catch (_) {
-    return Response(statusCode: HttpStatus.notFound, body: 'Not found');
+    return Response(
+      statusCode: HttpStatus.notFound,
+      body: 'Not found',
+    );
   }
 
-  if (context.request.method == HttpMethod.get) {
-    return _getMethod(context, book);
-  } else if (context.request.method == HttpMethod.put) {
-    return _putMethod(context, int.parse(id));
-  } else if (context.request.method == HttpMethod.delete) {
-    return _deleteMethod(context, int.parse(id));
-  } else {
-    return Response(statusCode: HttpStatus.methodNotAllowed);
+  switch (context.request.method) {
+    case HttpMethod.get:
+      return _getMethod(context, book);
+    case HttpMethod.put:
+      return _putMethod(context, int.parse(id));
+    case HttpMethod.delete:
+      return _deleteMethod(context, int.parse(id));
+    case HttpMethod.post:
+    case HttpMethod.head:
+    case HttpMethod.options:
+    case HttpMethod.patch:
+      return Response(statusCode: HttpStatus.methodNotAllowed);
   }
 }
 

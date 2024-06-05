@@ -5,12 +5,17 @@ import 'package:books_data_source/books_data_source.dart';
 import 'package:dart_frog/dart_frog.dart';
 
 FutureOr<Response> onRequest(RequestContext context) async {
-  if (context.request.method == HttpMethod.get) {
-    return _getMethod(context);
-  } else if (context.request.method == HttpMethod.post) {
-    return _postMethod(context);
-  } else {
-    return Response(statusCode: HttpStatus.methodNotAllowed);
+  switch (context.request.method) {
+    case HttpMethod.get:
+      return _getMethod(context);
+    case HttpMethod.post:
+      return _postMethod(context);
+    case HttpMethod.delete:
+    case HttpMethod.head:
+    case HttpMethod.options:
+    case HttpMethod.patch:
+    case HttpMethod.put:
+      return Response(statusCode: HttpStatus.methodNotAllowed);
   }
 }
 
